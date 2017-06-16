@@ -10,7 +10,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // Calculate Postage
-app.get('/calculatePostage',calculateRate )
+app.get('/calculatePostage',getRate )
 
 app.get('/', function(request, response) {
   response.render('pages/index');
@@ -21,9 +21,53 @@ app.listen(app.get('port'), function() {
 });
 
 
-function calculateRate(req, res) {
+/*
+Core Functions for the Postage Calculations
+*/
+function getRate(req, res) {
 
-	console.log("caluculating postage");
+	console.log("getting postage");
 
-	res.render('pages/displayRate');
+	var weight = req.query.weight;
+	var mailType = req.query.mailType;
+
+	var price = calculateRate(weight, mailType);
+
+	params = {
+		weight: weight,
+		mailType: mailType,
+		price: price,
+	}
+
+	res.render('pages/displayRate', params);
+}
+
+function calculateRate(weight, mailType) {
+	console.log("calculating postage");
+
+	switch(mailType) {
+		case "stamped":
+			console.log("postage: stamped");
+			return 0.49 + (Number(weight) - 1) * 0.21;
+			break;
+		case "metered":
+			console.log("postage: metered");
+			return 0.46 + (Number(weight) - 1) * 0.21;
+			break;
+		case "largeEvn":
+			console.log("postage: largeEnv");
+			return 0.98 + (Number(weight) - 1) * 0.21;
+			break;
+		case "parcel":
+			console.log("postage: parcel");
+			if (Number(weight) >= 4) {
+				return 2.67 + (Number(weight) - 4) * 0.18;
+			}
+			else {
+				return 2.67;
+			} 
+			break;
+		default:
+			console.log("postage deafault");
+	}
 }
