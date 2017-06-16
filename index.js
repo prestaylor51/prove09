@@ -9,6 +9,9 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+// Calculate Postage
+app.get('/calculatePostage',calculateRate )
+
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
@@ -18,3 +21,9 @@ app.listen(app.get('port'), function() {
 });
 
 
+function calculateRate(req, res) {
+
+	console.log("caluculating postage");
+
+	res.render('pages/displayRate');
+}

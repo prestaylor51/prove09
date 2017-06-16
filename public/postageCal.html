@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Postage Calculator</title>
+</head>
+<body>
+	<h1>Postage Calculator</h1>
+	<form method="get" action="/calculatePostage">
+		<label for="weight">Package Weight</label>
+		<input type="text" name="weight" id="weight" />
+
+		<br/>
+		<br/>
+
+		<label for="mailType">Mail Type</label>
+		<select name="mailType" id="mailType">
+			<option value="stamped">Stamped Letter</option>
+			<option value="metered">Metered Letter</option>
+			<option value="largeEvn">Large Envalope</option>
+			<option value="parcels">Parcels</option>
+		</select>
+
+		<button type="submit">Calculate</button>
+	</form>
+</body>
+</html>
